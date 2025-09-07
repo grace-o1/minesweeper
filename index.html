@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property = og:image content="./Untitled-1.jpg">
+
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet"/>
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@3/dist/vuetify.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>지뢰찾기</title>
+</head>
+<body>
+    <div id="app">
+        
+        <v-app>
+            <div class="modal" v-if="showModal">
+                <div class="modal-container">
+                    
+                    <h2>* 게임 설명 *</h2>
+                    <p>1. 총 6개의 지뢰를 찾습니다 <br> 
+                    2. 랜덤으로 배치되어 있습니다. <br>
+                    3. 6개를 찾으면 승리! <br>
+                    4. 상단에 다시하기 버튼이 있습니다.
+                    </p>
+                    <button class="modal-close" @click="showModal = false"> X 닫기</button>
+                </div>
+                    
+            </div>
+            <div class="content">
+                    <div class="title">
+                        <h3>지뢰찾기!<br>[ 총 6개 ]</h3>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <!-- <v-btn color="primary" variant="flat" @click="reset">다시하기</v-btn> -->
+                    <button class="bt2" @click="reset(); showModal = true">🔄️ 다시하기</button>
+                </div>
+               
+                <div class="mine-panel">
+                    <button :class="getClass(0)" @click="clickButton(0)"><v-icon v-if="buttons[0].revealed && buttons[0].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(1)" @click="clickButton(1)"><v-icon v-if="buttons[1].revealed && buttons[1].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(2)" @click="clickButton(2)"><v-icon v-if="buttons[2].revealed && buttons[2].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(3)" @click="clickButton(3)"><v-icon v-if="buttons[3].revealed && buttons[3].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(4)" @click="clickButton(4)"><v-icon v-if="buttons[4].revealed && buttons[4].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(5)" @click="clickButton(5)"><v-icon v-if="buttons[5].revealed && buttons[5].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(6)" @click="clickButton(6)"><v-icon v-if="buttons[6].revealed && buttons[6].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(7)" @click="clickButton(7)"><v-icon v-if="buttons[7].revealed && buttons[7].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(8)" @click="clickButton(8)"><v-icon v-if="buttons[8].revealed && buttons[8].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(9)" @click="clickButton(9)"><v-icon v-if="buttons[9].revealed && buttons[9].mine">mdi-bomb</v-icon></button>
+                    </div>
+                <div class="mine-panel">
+                    <button :class="getClass(10)" @click="clickButton(10)"><v-icon v-if="buttons[10].revealed && buttons[10].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(11)" @click="clickButton(11)"><v-icon v-if="buttons[11].revealed && buttons[11].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(12)" @click="clickButton(12)"><v-icon v-if="buttons[12].revealed && buttons[12].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(13)" @click="clickButton(13)"><v-icon v-if="buttons[13].revealed && buttons[13].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(14)" @click="clickButton(14)"><v-icon v-if="buttons[14].revealed && buttons[14].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(15)" @click="clickButton(15)"><v-icon v-if="buttons[15].revealed && buttons[15].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(16)" @click="clickButton(16)"><v-icon v-if="buttons[16].revealed && buttons[16].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(17)" @click="clickButton(17)"><v-icon v-if="buttons[17].revealed && buttons[17].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(18)" @click="clickButton(18)"><v-icon v-if="buttons[18].revealed && buttons[18].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(19)" @click="clickButton(19)"><v-icon v-if="buttons[19].revealed && buttons[19].mine">mdi-bomb</v-icon></button>
+                </div>
+                <div class="mine-panel">
+                    <button :class="getClass(20)" @click="clickButton(20)"><v-icon v-if="buttons[20].revealed && buttons[20].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(21)" @click="clickButton(21)"><v-icon v-if="buttons[21].revealed && buttons[21].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(22)" @click="clickButton(22)"><v-icon v-if="buttons[22].revealed && buttons[22].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(23)" @click="clickButton(23)"><v-icon v-if="buttons[23].revealed && buttons[23].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(24)" @click="clickButton(24)"><v-icon v-if="buttons[24].revealed && buttons[24].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(25)" @click="clickButton(25)"><v-icon v-if="buttons[25].revealed && buttons[25].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(26)" @click="clickButton(26)"><v-icon v-if="buttons[26].revealed && buttons[26].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(27)" @click="clickButton(27)"><v-icon v-if="buttons[27].revealed && buttons[27].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(28)" @click="clickButton(28)"><v-icon v-if="buttons[28].revealed && buttons[28].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(29)" @click="clickButton(29)"><v-icon v-if="buttons[29].revealed && buttons[29].mine">mdi-bomb</v-icon></button>
+                </div>
+                <div class="mine-panel">
+                    <button :class="getClass(30)" @click="clickButton(30)"><v-icon v-if="buttons[30].revealed && buttons[30].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(31)" @click="clickButton(31)"><v-icon v-if="buttons[31].revealed && buttons[31].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(32)" @click="clickButton(32)"><v-icon v-if="buttons[32].revealed && buttons[32].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(33)" @click="clickButton(33)"><v-icon v-if="buttons[33].revealed && buttons[33].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(34)" @click="clickButton(34)"><v-icon v-if="buttons[34].revealed && buttons[34].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(35)" @click="clickButton(35)"><v-icon v-if="buttons[35].revealed && buttons[35].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(36)" @click="clickButton(36)"><v-icon v-if="buttons[36].revealed && buttons[36].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(37)" @click="clickButton(37)"><v-icon v-if="buttons[37].revealed && buttons[37].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(38)" @click="clickButton(38)"><v-icon v-if="buttons[38].revealed && buttons[38].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(39)" @click="clickButton(39)"><v-icon v-if="buttons[39].revealed && buttons[39].mine">mdi-bomb</v-icon></button>
+                </div>
+                <div class="mine-panel">
+                    <button :class="getClass(40)" @click="clickButton(40)"><v-icon v-if="buttons[40].revealed && buttons[40].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(41)" @click="clickButton(41)"><v-icon v-if="buttons[41].revealed && buttons[41].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(42)" @click="clickButton(42)"><v-icon v-if="buttons[42].revealed && buttons[42].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(43)" @click="clickButton(43)"><v-icon v-if="buttons[43].revealed && buttons[43].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(44)" @click="clickButton(44)"><v-icon v-if="buttons[44].revealed && buttons[44].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(45)" @click="clickButton(45)"><v-icon v-if="buttons[45].revealed && buttons[45].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(46)" @click="clickButton(46)"><v-icon v-if="buttons[46].revealed && buttons[46].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(47)" @click="clickButton(47)"><v-icon v-if="buttons[47].revealed && buttons[47].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(48)" @click="clickButton(48)"><v-icon v-if="buttons[48].revealed && buttons[48].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(49)" @click="clickButton(49)"><v-icon v-if="buttons[49].revealed && buttons[49].mine">mdi-bomb</v-icon></button>
+                </div>
+                <div class="mine-panel">
+                    <button :class="getClass(50)" @click="clickButton(50)"><v-icon v-if="buttons[50].revealed && buttons[50].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(51)" @click="clickButton(51)"><v-icon v-if="buttons[51].revealed && buttons[51].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(52)" @click="clickButton(52)"><v-icon v-if="buttons[52].revealed && buttons[52].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(53)" @click="clickButton(53)"><v-icon v-if="buttons[53].revealed && buttons[53].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(54)" @click="clickButton(54)"><v-icon v-if="buttons[54].revealed && buttons[54].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(55)" @click="clickButton(55)"><v-icon v-if="buttons[55].revealed && buttons[55].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(56)" @click="clickButton(56)"><v-icon v-if="buttons[56].revealed && buttons[56].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(57)" @click="clickButton(57)"><v-icon v-if="buttons[57].revealed && buttons[57].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(58)" @click="clickButton(58)"><v-icon v-if="buttons[58].revealed && buttons[58].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(59)" @click="clickButton(59)"><v-icon v-if="buttons[59].revealed && buttons[59].mine">mdi-bomb</v-icon></button>
+                </div>
+                <div class="mine-panel">
+                    <button :class="getClass(60)" @click="clickButton(60)"><v-icon v-if="buttons[60].revealed && buttons[60].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(61)" @click="clickButton(61)"><v-icon v-if="buttons[61].revealed && buttons[61].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(62)" @click="clickButton(62)"><v-icon v-if="buttons[62].revealed && buttons[62].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(63)" @click="clickButton(63)"><v-icon v-if="buttons[63].revealed && buttons[63].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(64)" @click="clickButton(64)"><v-icon v-if="buttons[64].revealed && buttons[64].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(65)" @click="clickButton(65)"><v-icon v-if="buttons[65].revealed && buttons[65].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(66)" @click="clickButton(66)"><v-icon v-if="buttons[66].revealed && buttons[66].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(67)" @click="clickButton(67)"><v-icon v-if="buttons[67].revealed && buttons[67].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(68)" @click="clickButton(68)"><v-icon v-if="buttons[68].revealed && buttons[68].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(69)" @click="clickButton(69)"><v-icon v-if="buttons[69].revealed && buttons[69].mine">mdi-bomb</v-icon></button>
+                </div>
+                <div class="mine-panel">
+                    <button :class="getClass(70)" @click="clickButton(70)"><v-icon v-if="buttons[70].revealed && buttons[70].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(71)" @click="clickButton(71)"><v-icon v-if="buttons[71].revealed && buttons[71].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(72)" @click="clickButton(72)"><v-icon v-if="buttons[72].revealed && buttons[72].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(73)" @click="clickButton(73)"><v-icon v-if="buttons[73].revealed && buttons[73].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(74)" @click="clickButton(74)"><v-icon v-if="buttons[74].revealed && buttons[74].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(75)" @click="clickButton(75)"><v-icon v-if="buttons[75].revealed && buttons[75].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(76)" @click="clickButton(76)"><v-icon v-if="buttons[76].revealed && buttons[76].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(77)" @click="clickButton(77)"><v-icon v-if="buttons[77].revealed && buttons[77].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(78)" @click="clickButton(78)"><v-icon v-if="buttons[78].revealed && buttons[78].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(79)" @click="clickButton(79)"><v-icon v-if="buttons[79].revealed && buttons[79].mine">mdi-bomb</v-icon></button>
+                </div>
+                <div class="mine-panel">
+                    <button :class="getClass(80)" @click="clickButton(80)"><v-icon v-if="buttons[80].revealed && buttons[80].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(81)" @click="clickButton(81)"><v-icon v-if="buttons[81].revealed && buttons[81].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(82)" @click="clickButton(82)"><v-icon v-if="buttons[82].revealed && buttons[82].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(83)" @click="clickButton(83)"><v-icon v-if="buttons[83].revealed && buttons[83].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(84)" @click="clickButton(84)"><v-icon v-if="buttons[84].revealed && buttons[84].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(85)" @click="clickButton(85)"><v-icon v-if="buttons[85].revealed && buttons[85].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(86)" @click="clickButton(86)"><v-icon v-if="buttons[86].revealed && buttons[86].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(87)" @click="clickButton(87)"><v-icon v-if="buttons[87].revealed && buttons[87].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(88)" @click="clickButton(88)"><v-icon v-if="buttons[88].revealed && buttons[88].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(89)" @click="clickButton(89)"><v-icon v-if="buttons[89].revealed && buttons[89].mine">mdi-bomb</v-icon></button>
+                </div>
+                <div class="mine-panel">
+                    <button :id = "bombSound" :class="getClass(90)" @click="clickButton(90)"><v-icon v-if="buttons[90].revealed && buttons[90].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(91)" @click="clickButton(91)"><v-icon v-if="buttons[91].revealed && buttons[91].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(92)" @click="clickButton(92)"><v-icon v-if="buttons[92].revealed && buttons[92].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(93)" @click="clickButton(93)"><v-icon v-if="buttons[93].revealed && buttons[93].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(94)" @click="clickButton(94)"><v-icon v-if="buttons[94].revealed && buttons[94].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(95)" @click="clickButton(95)"><v-icon v-if="buttons[95].revealed && buttons[95].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(96)" @click="clickButton(96)"><v-icon v-if="buttons[96].revealed && buttons[96].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(97)" @click="clickButton(97)"><v-icon v-if="buttons[97].revealed && buttons[97].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(98)" @click="clickButton(98)"><v-icon v-if="buttons[98].revealed && buttons[98].mine">mdi-bomb</v-icon></button>
+                    <button :class="getClass(99)" @click="clickButton(99)"><v-icon v-if="buttons[99].revealed && buttons[99].mine">mdi-bomb</v-icon></button>
+                </div>
+                </div>
+                 <audio ref="emptySound" id="emptySound" src="./터지는소리.mp3" preload="auto"></audio>
+                 <audio ref="bombSound" id="bombSound" src="./지뢰터지는소리.mp3" preload="auto"></audio>
+
+                 <!-- <div class="timer">
+                    <div>타이머: {{ time }}초</div>
+                    <button @click = "startTimer()">시작</button>
+                 </div> -->
+                </div>
+            </div>
+        </div>
+    </v-app>
+</div>
+    
+    <script>
+        const { createApp, ref } = Vue;
+        const { createVuetify } = Vuetify;
+
+        createApp({
+        setup() {
+        // 100개 버튼 상태
+       
+        const time = ref(60);
+        let timerID = null; //초기상태 초기화!!
+        const bombSound = ref(null); //value:null (빈값아님 착각노노)- id를 꼭 줘야함
+        const emptySound = ref(null); //value:null (빈값아님 착각노노)- id를 꼭 줘야함
+        const showModal = ref(true); //시작할 때 열려있음 
+        const buttons = ref(Array.from({ length: 100 }, () => ({ mine: false, revealed: false })));
+        const vuetify = createVuetify({
+            icon: {
+                defaultSet: 'mdi'
+            }
+        })
+
+
+        function startTimer(){
+            if(timerID) return; //이미 타이머 돌고 있으면 종료
+            timerID =  setInterval(()=>{
+                if(time.value > 0){
+                time.value --; 
+                } else {
+                    clearInterval(timerID); //0초 시 타이머 stop
+                    timerID = null;
+                    alert("시간 종료!")
+                }
+            }, 1000);
+        }
+
+
+        function playemptySound(){
+            document.getElementById('emptySound').play();
+            if(navigator.vibrate){
+                navigator.vibrate(200); //200ms 동안 진동 안드로이드만 부르르
+            }
+        }
+        
+        function playbombSound(){
+            document.getElementById('bombSound').play();
+            if(navigator.vibrate){
+                navigator.vibrate(500); //500ms 동안 진동 안드로이드만 부르르르르
+            }
+        }
+
+        function handleClick(i){
+            if(buttons.value[i].mine){
+                //지뢰 밟았을때
+                playbombSound();
+            } else {
+                //지뢰가 아닐때
+                playemptySound();
+            }
+        }
+
+        function placeMines(count = 6) {
+        const picked = new Set();
+        while (picked.size < count) {
+        picked.add(Math.floor(Math.random() * 100));
+        } 
+        picked.forEach(i => (buttons.value[i].mine = true));
+        }
+        placeMines(6);
+        
+
+        function clickButton(i) {
+        const btn = buttons.value[i];
+        if (btn.revealed) return;
+        btn.revealed = true;
+        
+        if (btn.mine){ 
+            const minesFind = buttons.value.filter(b => b.mine && b.revealed).length;
+            document.getElementById('bombSound').play();
+            alert('찾았다! 지뢰');
+        }
+        else {
+            document.getElementById('emptySound').play();
+        }
+        }
+        
+
+
+        function getClass(i) {
+        const btn = buttons.value[i];
+        return {
+        revealed: btn.revealed && !btn.mine,
+        mine: btn.revealed && btn.mine
+        }; //버튼의 반환되는 값의 return - 버튼 상태 객체
+        }
+
+        // //타이머 버튼용 클래스 함수
+        // function getClass2(){
+        //     return{
+        //         'start-btn': true,
+        //         'timer-running': timerID.value !== null
+        //     }
+        // }
+
+
+        function reset() {
+        if(timerID){clearInterval(timerID); timerID = null}
+        time.value = 60; 
+           
+        buttons.value.forEach(b => {
+        b.mine = false;
+        b.revealed = false; // 클릭해서 공개했는지의 여부 revealed: 밝혀진
+        });
+        placeMines(6);
+        showModal.value = true; //게임 리셋 시 모달 다시 띄우고 싶으면 추가
+        }
+
+        return { buttons, clickButton, getClass, reset, showModal, vuetify, bombSound, emptySound, playbombSound, playemptySound, time, startTimer };
+        } // 템플릿과 연결하기 위한 setup 에서 반환하는 객체 key 값
+        }).use(createVuetify()).mount('#app');
+
+        //time, startTimer
+    </script>
+</body>
+</html>
