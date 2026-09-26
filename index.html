@@ -254,11 +254,14 @@
         if (btn.mine){ 
             const minesFind = buttons.value.filter(b => b.mine && b.revealed).length;
             document.getElementById('bombSound').play();
-            alert('찾았다! 지뢰');
+            if (minesFind === 6) {
+                alert('🎉 승리! 지뢰 6개를 모두 찾았습니다!');
+            // alert('찾았다! 지뢰');
         }
-        else {
-            document.getElementById('emptySound').play();
-        }
+            else {
+                document.getElementById('emptySound').play();
+                alert(`찾았다! 지뢰 (${minesFind}/6)`);
+            }
         }
         
 
