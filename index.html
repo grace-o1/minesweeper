@@ -256,6 +256,7 @@
         document.getElementById('bombSound').play();
             if (minesFind === 6) {
                 alert('🎉 승리! 지뢰 6개를 모두 찾았습니다!');
+                reset();   // ← 추가된 부분: 확인 누르면 자동으로 새 판 시작
             } else {
                 alert(`찾았다! 지뢰 (${minesFind}/6)`);
             }
